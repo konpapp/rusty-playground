@@ -1,4 +1,5 @@
 use clap::{App, Arg};
+#[cfg(not(windows))]
 use smoltcp::phy::TapInterface;
 use url::Url;
 
@@ -6,6 +7,7 @@ mod dns;
 mod ethernet;
 mod http;
 
+#[cfg(not(windows))]
 fn main() {
     let app = App::new("mget")
         .about("GET a webpage, manually")
@@ -42,4 +44,9 @@ fn main() {
     let mac = ethernet::MacAddress::new().into();
 
     http::get(tap, mac, addr, url).unwrap();
+}
+
+#[cfg(windows)]
+fn main() {
+    println!("this application is only available on unix")
 }

@@ -1,9 +1,11 @@
 use std::collections::BTreeMap;
 use std::fmt;
 use std::net::IpAddr;
+#[cfg(not(windows))]
 use std::os::unix::io::AsRawFd;
 
 use smoltcp::iface::{EthernetInterfaceBuilder, NeighborCache, Routes};
+#[cfg(not(windows))]
 use smoltcp::phy::{wait as phy_wait, TapInterface};
 use smoltcp::socket::{SocketSet, TcpSocket, TcpSocketBuffer};
 use smoltcp::time::Instant;
@@ -46,6 +48,7 @@ fn random_port() -> u16 {
     49152 + rand::random::<u16>() % 16384
 }
 
+#[cfg(not(windows))]
 pub fn get(
     tap: TapInterface,
     mac: EthernetAddress,
