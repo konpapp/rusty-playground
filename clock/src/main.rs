@@ -163,7 +163,7 @@ fn check_time() -> Result<f64, std::io::Error> {
         "time.windows.com",
     ];
 
-    let times: Vec<NTPResult> = Vec::with_capacity(servers.len());
+    let mut times: Vec<NTPResult> = Vec::with_capacity(servers.len());
 
     for &server in servers.iter() {
         print!("{} =>", server);
